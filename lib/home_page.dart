@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-// import 'insert.dart';
+import 'package:crud_perpustakaan/insert.dart';
 // import 'update.dart';
 
 class BookListPage extends StatefulWidget {
@@ -18,7 +18,7 @@ class _BookListPageState extends State<BookListPage> {
   @override
   void initState() {
     super
-        .initState(); //super.initState() digunakan untuk menginisialisasi variabel atau memanggil fungsi pada widget parent
+      .initState(); //super.initState() digunakan untuk menginisialisasi variabel atau memanggil fungsi pada widget parent
     fetchBooks(); //Panggil fungsi untuk mengambil data buku
   }
 
@@ -33,9 +33,10 @@ class _BookListPageState extends State<BookListPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return Scaffold( //Scaffold digunakan untuk membuat tampilan dasar aplikasi
         appBar: AppBar(
           title: const Text('Daftar Buku'),
+          centerTitle: true,
           actions: [
             IconButton(
               icon: const Icon(Icons.refresh),
@@ -47,7 +48,7 @@ class _BookListPageState extends State<BookListPage> {
         body: books.isEmpty
             ? const Center(
                 child:
-                    CircularProgressIndicator()) //untuk menampilkan indikator loading saat data belum tersedia
+                  CircularProgressIndicator()) //untuk menampilkan indikator loading saat data belum tersedia
             : ListView.builder(
                 //untuk membuat tampilan list secara urut
                 itemCount: books.length,
@@ -72,7 +73,7 @@ class _BookListPageState extends State<BookListPage> {
                           ), //?? digunakan untuk menampilkan teks default jika data buku kosong
                         ],
                       ),
-                      trailing: Row(
+                      trailing: Row( //trailing digunakan untuk mengatur posisi tombol/icon di bagian kanan
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           //Tombol edit
@@ -103,7 +104,7 @@ class _BookListPageState extends State<BookListPage> {
                               showDialog(
                                   context: context,
                                   builder: (BuildContext context) {
-                                    return AlertDialog(
+                                    return AlertDialog( //
                                         title: const Text('Delete Book'),
                                         content: const Text(
                                             'Are you sure you want to delete this book?'),
@@ -127,7 +128,25 @@ class _BookListPageState extends State<BookListPage> {
                             },
                           )
                         ],
-                      ));
-                }));
+                      )
+                    );
+                  }
+                ),
+                //Fungsi untuk membuat FloatingButton
+                floatingActionButton: FloatingActionButton(
+                  onPressed: () {
+                    // Navigasi ke halaman InsertPage
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const AddBookPage(),
+                      ),
+                    );
+                  },
+                  child: const Icon(Icons.add), 
+                  // Ikon plus untuk menambahkan buku
+                    tooltip: 'Add Book',
+                )
+              );
   }
 }
